@@ -1,0 +1,15 @@
+{
+  "name": "shopyfy-to-3dcart",
+  "version": "1.0.0",
+  "description": "Shopify => 3DCart",
+  "main": "index.js",
+  "repository": "https://github.com/dreamorosi/shopify-to-3dcart",
+  "author": "Andrea Amorosi",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  },
+  "scripts": {
+    "start": "nodemon index.js"
+  }
+}
