@@ -1,5 +1,5 @@
 # shopify-to-3dcart [![Node version](https://img.shields.io/badge/node-v8.0.0-blue.svg)](http://nodejs.org/download/) [![Node version](https://img.shields.io/badge/standard-javascript-yellow.svg)](http://nodejs.org/download/)
-Easily convert your Shopify Customer data by providing a `.csv` file in a 3DCart ready format.
+Easily convert your Shopify Customer data, by providing a `.csv` file, in a 3DCart ready format.
 
 ## Shopify vs 3DCart data comparison
 
@@ -38,3 +38,8 @@ Finally, the **Tags** field from Shopify will be left out. 3DCart does not provi
 Just clone the repository, run `yarn install` and then move the `.csv` file [exported](https://help.shopify.com/manual/customers/import-export-customers#export-existing-customers-to-a-csv-file) from Shopify into the project directory.
 
 The script currently supports one file at the time and processes the first `.csv` file found in the directory in alphabetical order. To convert the file just run `yarn convert` and wait until the console logs `Done!`, the converted file will be in the same directory and will be called `3DCart.csv`.
+
+## Sources
+
+- [3DCart Knowledgebase - How do I import Customers via CSV?](https://support.3dcart.com/Knowledgebase/Article/View/396/7/how-do-i-import-customers-via-csv)
+- [Shopify Help Center - Importing and exporting customers](https://help.shopify.com/manual/customers/import-export-customers)
