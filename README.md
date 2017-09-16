@@ -22,7 +22,7 @@ Easily convert your Shopify Customer data, by providing a `.csv` file, in a 3DCa
 | Total Spent       | --- | Merging into **Comments** field |
 | Total Orders      | --- | Merging into **Comments** field |
 | Tags              | --- |                                 |
-| Note              | Comments | Merging here **Total Spent** and **Total Orders** |
+| Note              | comments | Merging here **Total Spent** and **Total Orders** |
 | Tax Exempt        | accountno |   | |
 
 As we can see most of the fields from Shopify have a correspondent in the 3DCart field format but to be made. 3DCart has a few specific fields of it own:
