@@ -18,7 +18,7 @@ Easily convert your Shopify Customer data, by providing a `.csv` file, in a 3DCa
 | Country Code      | billing_country & shipping_country |   |
 | Zip               | billing_zip & shipping_zip |   |
 | Phone             | billing_phone & shipping_phone |   |
-| Accepts Marketing | maillist | `yes | no` => `1 | 0` |
+| Accepts Marketing | maillist | `yes - no` => `1 - 0` |
 | Total Spent       | --- | Merging into **Comments** field |
 | Total Orders      | --- | Merging into **Comments** field |
 | Tags              | --- |                                 |
