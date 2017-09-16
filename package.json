@@ -10,6 +10,15 @@
     "nodemon": "^1.12.1"
   },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "convert": "node index.js"
+  },
+  "dependencies": {
+    "crlf-helper": "^0.1.0",
+    "fs-readfile-promise": "^3.0.0",
+    "fs-writefile-promise": "^2.0.0",
+    "json2csv": "^3.11.2",
+    "node-dir": "^0.1.17",
+    "password-generator": "^2.1.0"
   }
 }
