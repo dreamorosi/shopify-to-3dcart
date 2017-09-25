@@ -5,6 +5,7 @@ var generatePassword = require('password-generator')
 var json2csv = require('json2csv')
 var crlf = require('crlf-helper')
 const writeFile = require('fs-writefile-promise/lib/node7')
+var csvrow = require('csvrow')
 
 const readCsv = async path => {
   try {
@@ -18,36 +19,62 @@ const readCsv = async path => {
 const processCsv = text => {
   let lines = text.split(/\r?\n|\r/)
   lines.splice(0, 1)
-  let fieldGroups = lines.map(line => line.split(','))
-  let users = fieldGroups.map(shopifyFields => ({
-    'billing_firstname': shopifyFields[0],
-    'billing_lastname': shopifyFields[1],
-    'billing_address': shopifyFields[4],
-    'billing_address2': shopifyFields[5],
-    'billing_city': shopifyFields[6],
-    'billing_state': shopifyFields[8],
-    'billing_zip': shopifyFields[11],
-    'billing_country': shopifyFields[10],
-    'billing_company': shopifyFields[3],
-    'billing_phone': shopifyFields[12],
-    'email': shopifyFields[2],
-    'shipping_firstname': shopifyFields[0],
-    'shipping_lastname': shopifyFields[1],
-    'shipping_address': shopifyFields[4],
-    'shipping_address2': shopifyFields[5],
-    'shipping_city': shopifyFields[6],
-    'shipping_state': shopifyFields[8],
-    'shipping_zip': shopifyFields[11],
-    'shipping_country': shopifyFields[10],
-    'shipping_company': shopifyFields[3],
-    'shipping_phone': shopifyFields[12],
-    'comments': `Total Spent: ${shopifyFields[14]} - Total Orders: ${shopifyFields[15]} - Notes: ${shopifyFields[17]}`.trim(),
-    'pass': generatePassword(),
-    'discount': '',
-    'accountno': shopifyFields[18],
-    'maillist': shopifyFields[13] === 'yes' ? 1 : 0,
-    'custenabled': 1
-  }))
+  let fieldGroups = lines.map(line => csvrow.parse(line))
+  let users = fieldGroups.map(shopifyFields => {
+    let firstName = shopifyFields[0] !== undefined && shopifyFields[0] !== ''
+      ? shopifyFields[0].replace(/,/g, '') : ''
+    let lastName = shopifyFields[1] !== undefined && shopifyFields[1] !== ''
+      ? shopifyFields[1].replace(/,/g, '') : ''
+    let phone = shopifyFields[12] !== undefined
+      ? shopifyFields[12].replace('\'', '') : ''
+    let notes = shopifyFields[16] !== undefined && shopifyFields[16] !== ''
+      ? `- Notes: ${shopifyFields[16].replace(',', '-')}` : ''
+    let address = shopifyFields[4] !== undefined && shopifyFields[4] !== ''
+      ? shopifyFields[4].replace(/,/g, '') : ''
+    let address2 = shopifyFields[5] !== undefined && shopifyFields[5] !== ''
+      ? shopifyFields[5].replace(/,/g, '') : ''
+    let company = shopifyFields[3] !== undefined && shopifyFields[3] !== ''
+      ? shopifyFields[3].replace(/,/g, '') : ''
+    let city = shopifyFields[6] !== undefined && shopifyFields[6] !== ''
+      ? shopifyFields[6].replace(/,/g, '') : ''
+    let state = shopifyFields[8] !== undefined && shopifyFields[8] !== ''
+      ? shopifyFields[8].replace(/,/g, '') : ''
+    let country = shopifyFields[10] !== undefined && shopifyFields[10] !== ''
+      ? shopifyFields[10].replace(/,/g, '') : ''
+    let tax = shopifyFields[18] === 'no' || shopifyFields[10] === ''
+      ? '' : shopifyFields[18]
+    // TODO: validate fields
+    return {
+      'billing_firstname': firstName,
+      'billing_lastname': lastName,
+      'billing_address': address,
+      'billing_address2': address2,
+      'billing_city': city,
+      'billing_state': state,
+      'billing_zip': shopifyFields[11],
+      'billing_country': country,
+      'billing_company': company,
+      'billing_phone': phone,
+      'email': shopifyFields[2],
+      'shipping_firstname': firstName,
+      'shipping_lastname': lastName,
+      'shipping_address': address,
+      'shipping_address2': address2,
+      'shipping_city': city,
+      'shipping_state': state,
+      'shipping_zip': shopifyFields[11],
+      'shipping_country': country,
+      'shipping_company': company,
+      'shipping_phone': phone,
+      'comments': `Total Spent: ${shopifyFields[14]} - Total Orders: ${shopifyFields[15]} ${notes}`.trim(),
+      'pass': generatePassword(),
+      'discount': '',
+      'accountno': tax,
+      // 'maillist': shopifyFields[13] === 'yes' ? 1 : 0,
+      'maillist': 1,
+      'custenabled': 1
+    }
+  })
 
   if (users[users.length - 1].billing_lastname === undefined) {
     users.splice(users.length - 1, 1)

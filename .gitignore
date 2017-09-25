@@ -56,3 +56,6 @@ typings/
 
 # dotenv environment variables file
 .env
+
+3DCart.csv
+customers_export.csv

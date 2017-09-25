@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "crlf-helper": "^0.1.0",
+    "csvrow": "^0.1.0",
     "fs-readfile-promise": "^3.0.0",
     "fs-writefile-promise": "^2.0.0",
     "json2csv": "^3.11.2",
